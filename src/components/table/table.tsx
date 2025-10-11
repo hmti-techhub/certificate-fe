@@ -105,7 +105,7 @@ export function GeneralTable<TData, TValue>({
       try {
         const url = new URL(
           `/qrcode/${eventUid}/all`,
-          "https://certificate-be-production.up.railway.app",
+          "https://api-certify.hmtiudinus.org",
         );
         url.searchParams.set("ext", extensionSelected);
         const updatedUrl = url.toString();

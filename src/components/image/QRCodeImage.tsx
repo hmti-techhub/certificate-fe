@@ -12,7 +12,7 @@ export const QRCodeImage = ({ qrCodeSource, alt }: QRCodeProps) => {
   const [isLoading, setIsLoading] = useState(true);
   const [hasError, setHasError] = useState(false);
 
-  const src = `https://certificate-be-production.up.railway.app${qrCodeSource}`;
+  const src = `https://api-certify.hmtiudinus.org${qrCodeSource}`;
 
   if (hasError) {
     return <div className="text-purplee text-xs">genereting...</div>;

@@ -16,7 +16,7 @@ const nextConfig: NextConfig = {
     remotePatterns: [
       {
         protocol: "https",
-        hostname: "certificate-be-production.up.railway.app",
+        hostname: "api-certify.hmtiudinus.org",
         pathname: "/**",
       },
       {
@@ -29,6 +29,12 @@ const nextConfig: NextConfig = {
         hostname: "picsum.photos",
         pathname: "/**",
       },
+      {
+        protocol:"http",
+        hostname: "localhost",
+        port: "3001",
+        pathname: "/**",
+      }
     ],
   },
   logging: {

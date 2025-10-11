@@ -27,7 +27,7 @@ export const TemplateStakeholderImage = ({
       ) : (
         <Image
           src={
-            "https://certificate-be-production.up.railway.app" +
+            "https://api-certify.hmtiudinus.org" +
             stakeholderData.photoPath
           }
           width={108}

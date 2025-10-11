@@ -19,7 +19,7 @@ export const TemplateEventLogo = ({
           <Image
             src={
               typeof participantCertificateData.logoFirst === "string"
-                ? "https://certificate-be-production.up.railway.app" +
+                ? "https://api-certify.hmtiudinus.org" +
                   participantCertificateData.logoFirst
                 : URL.createObjectURL(
                     participantCertificateData.logoFirst[0] as Blob,
@@ -43,7 +43,7 @@ export const TemplateEventLogo = ({
         <Image
           src={
             typeof participantCertificateData.logoSecond === "string"
-              ? "https://certificate-be-production.up.railway.app" +
+              ? "https://api-certify.hmtiudinus.org" +
                 participantCertificateData.logoSecond
               : URL.createObjectURL(
                   participantCertificateData.logoSecond[0] as Blob,
@@ -72,7 +72,7 @@ export const TemplateEventLogo = ({
     //     <Image
     //       src={
     //         typeof participantCertificateData.logoFirst === "string"
-    //           ? "https://certificate-be-production.up.railway.app" +
+    //           ? "https://api-certify.hmtiudinus.org" +
     //             participantCertificateData.logoFirst
     //           : URL.createObjectURL(
     //               participantCertificateData.logoFirst[0] as Blob,

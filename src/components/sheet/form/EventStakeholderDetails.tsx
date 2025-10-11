@@ -37,7 +37,7 @@ export const EventStakeholderDetailSheet = ({
     name: eventData.stakeholders![0].name,
     position: eventData.stakeholders![0].position,
     photoPath: eventData.stakeholders![0].photoPath
-      ? "https://certificate-be-production.up.railway.app" +
+      ? "https://api-certify.hmtiudinus.org" +
         eventData.stakeholders![0].photoPath
       : "https://github.com/shadcn.png",
   });
@@ -115,7 +115,7 @@ export const EventStakeholderDetailSheet = ({
                     <Image
                       src={
                         stakeholderData.photoPath !== null
-                          ? "https://certificate-be-production.up.railway.app" +
+                          ? "https://api-certify.hmtiudinus.org" +
                             stakeholderData.photoPath
                           : "https://github.com/shadcn.png"
                       }

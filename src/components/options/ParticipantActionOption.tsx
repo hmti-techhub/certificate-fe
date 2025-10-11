@@ -59,7 +59,7 @@ export const ParticipantActionOption = ({
       try {
         const url = new URL(
           participantData.pathQr,
-          "https://certificate-be-production.up.railway.app",
+          "https://api-certify.hmtiudinus.org",
         );
         url.searchParams.set("download", "1");
         const updatedUrl = url.toString() + `&ext=${extensionSelected}`;
