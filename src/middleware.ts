@@ -13,6 +13,7 @@ export default auth((req) => {
   if (nextUrl.pathname === "/events") {
     return Response.redirect(new URL("/dashboard", nextUrl));
   }
+
   const isLoggedIn: boolean = !!req.auth;
 
   const isApiRoute: boolean = nextUrl.pathname.startsWith(apiRoute);

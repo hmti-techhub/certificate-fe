@@ -5,7 +5,7 @@ import Credentials from "next-auth/providers/credentials";
 import { signInFormSchema } from "@/lib/types/General";
 import jwt from "jsonwebtoken";
 
-export const { auth, handlers, signIn, signOut } = NextAuth({
+export const { auth, handlers, signIn, signOut, unstable_update } = NextAuth({
   providers: [
     Credentials({
       authorize: async (credentials) => {

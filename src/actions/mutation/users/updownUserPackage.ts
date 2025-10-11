@@ -65,6 +65,7 @@ export const updownUserPackage = async (
       };
     } else {
       revalidateTag("users");
+      revalidateTag(`user-${userUid}`);
       return {
         success: true,
         message: data.message,

@@ -96,7 +96,7 @@ export const TechnologyDesign2Template = ({
                     ? "mb-11 md:mb-12"
                     : "mb-0 md:mb-11"
                   : stakeholderData.photoPath
-                  ? "mb-7 md:mb-12"
+                  ? "mb-[45px] md:mb-12"
                   : "mb-9 md:mb-11"
                 : mode === "PREVIEW"
                 ? participantCertificateData.logoFirst ||

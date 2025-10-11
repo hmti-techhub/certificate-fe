@@ -23,7 +23,7 @@ export interface IJWTPayload {
   exp: number;
 }
 
-export interface IUserResponse<T = IUsersData[]> {
+export interface IUserResponse<T = IUsersData[] | IUserData> {
   success: boolean;
   status: number;
   message: string;
@@ -46,6 +46,7 @@ export interface IUserData {
   roles: "USER" | "SUPERADMIN";
   createdAt: string;
   isPremium: boolean;
+  isVerifiedEmail: boolean;
   premiumAt: string | null;
   premiumExpiredAt: string | null;
   premiumPackage: "FREEPLAN" | "SILVER" | "PLATINUM" | "GOLD";

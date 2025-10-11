@@ -20,6 +20,7 @@ const DashboardPage = async () => {
   const isPremium = session?.user.isPremium;
   const isVerifiedEmail = session?.user.isVerifiedEmail;
   const eventData = await getAllEvents();
+
   return (
     <div
       className={
