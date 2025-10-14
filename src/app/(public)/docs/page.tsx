@@ -11,6 +11,12 @@ import {
 } from "@/lib/types/Documentation";
 import Image from "next/image";
 import { DocumentationSidebar } from "@/components/DocumentationSidebar";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Documentation | Certify",
+  description: "Documentation for the application.",
+};
 
 export const dynamic = "force-static";
 
@@ -89,7 +95,7 @@ const DocsPage = async () => {
   };
 
   return (
-    <div className="min-h-screen bg-white pb-20">
+    <div className="min-h-screen bg-white pb-20 px-4 md:px-20 lg:px-40">
       <Link
         href="#"
         className="rounded-full bg-yelloww p-3 right-6 bottom-6 fixed shadow-lg border border-black hover:bg-yellow-200 transition-all duration-300"

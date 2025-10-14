@@ -19,7 +19,7 @@ const Navbar = ({
   session,
 }: {
   clickable?: boolean;
-  session: IAuthSession;
+  session?: IAuthSession;
 }) => {
   const role = session?.user.roles;
   const name = session?.user.email.split("@")[0];

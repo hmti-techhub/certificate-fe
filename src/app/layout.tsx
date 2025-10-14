@@ -1,4 +1,3 @@
-import type { Metadata } from "next";
 import { Toaster } from "@/components/ui/sonner";
 import "./globals.css";
 
@@ -11,12 +10,6 @@ const plusJakarta = Plus_Jakarta_Sans({
   variable: "--font-jakarta",
   display: "swap",
 });
-
-export const metadata: Metadata = {
-  title: "Certify",
-  description:
-    "Certify is a platform for managing events and generating QR Code certificates.",
-};
 
 export default async function RootLayout({
   children,

@@ -9,7 +9,7 @@
         "description": "<div class=''>Certify helps you create and manage secure, QR code-enabled certificates for events, professional, and verifiable.<div>",
         "image": [
           {
-            "url": "/certify-logo-black.png",
+            "url": "/certify/certify-logo-black.png",
             "alt": "image alt",
             "className": "w-70 md:w-100 h-auto mx-auto mt-5",
             "bordered": false
