@@ -37,8 +37,7 @@ export const EventStakeholderDetailSheet = ({
     name: eventData.stakeholders![0].name,
     position: eventData.stakeholders![0].position,
     photoPath: eventData.stakeholders![0].photoPath
-      ? "https://api-certify.hmtiudinus.org" +
-        eventData.stakeholders![0].photoPath
+      ? "https://certify.derisdev.cloud" + eventData.stakeholders![0].photoPath
       : "https://github.com/shadcn.png",
   });
   const form = useForm<z.infer<typeof updateStakeholderSchema>>({
@@ -115,7 +114,7 @@ export const EventStakeholderDetailSheet = ({
                     <Image
                       src={
                         stakeholderData.photoPath !== null
-                          ? "https://api-certify.hmtiudinus.org" +
+                          ? "https://certify.derisdev.cloud" +
                             stakeholderData.photoPath
                           : "https://github.com/shadcn.png"
                       }

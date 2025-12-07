@@ -1,11 +1,11 @@
-import { auth } from "@/auth";
+import { getSession } from "@/lib/get-session";
 //COMPOMENTS
 import { UsersTable } from "@/components/table/UsersTable";
 import { IUserResponse, IUsersData } from "@/lib/types/User";
 
 const getUsersData = async () => {
   try {
-    const session = await auth();
+    const session = await getSession();
     if (!session) {
       return {
         success: false,
@@ -57,7 +57,7 @@ const getUsersData = async () => {
 };
 
 const AdminPage = async () => {
-  const session = await auth();
+  const session = await getSession();
   if (!session) {
     return <div>Unauthorized</div>;
   }

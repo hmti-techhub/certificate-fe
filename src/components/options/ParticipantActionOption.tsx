@@ -59,7 +59,7 @@ export const ParticipantActionOption = ({
       try {
         const url = new URL(
           participantData.pathQr,
-          "https://api-certify.hmtiudinus.org",
+          "https://certify.derisdev.cloud",
         );
         url.searchParams.set("download", "1");
         const updatedUrl = url.toString() + `&ext=${extensionSelected}`;

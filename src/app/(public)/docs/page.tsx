@@ -18,8 +18,6 @@ export const metadata: Metadata = {
   description: "Documentation for the application.",
 };
 
-export const dynamic = "force-static";
-
 const DocsPage = async () => {
   const filePath = path.join(process.cwd(), "/public/Docs.json");
   const fileContents = fs.readFileSync(filePath, "utf-8");
