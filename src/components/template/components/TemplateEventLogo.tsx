@@ -19,7 +19,7 @@ export const TemplateEventLogo = ({
           <Image
             src={
               typeof participantCertificateData.logoFirst === "string"
-                ? "https://api-certify.hmtiudinus.org" +
+                ? "https://certify.derisdev.cloud" +
                   participantCertificateData.logoFirst
                 : URL.createObjectURL(
                     participantCertificateData.logoFirst[0] as Blob,
@@ -43,7 +43,7 @@ export const TemplateEventLogo = ({
         <Image
           src={
             typeof participantCertificateData.logoSecond === "string"
-              ? "https://api-certify.hmtiudinus.org" +
+              ? "https://certify.derisdev.cloud" +
                 participantCertificateData.logoSecond
               : URL.createObjectURL(
                   participantCertificateData.logoSecond[0] as Blob,

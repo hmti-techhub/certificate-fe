@@ -1,4 +1,4 @@
-import { auth } from "@/auth";
+import { getSession } from "@/lib/get-session";
 import { IUserData, IUserResponse } from "@/lib/types/User";
 export const getUserData = async (): Promise<{
   success: boolean;
@@ -6,7 +6,7 @@ export const getUserData = async (): Promise<{
   data?: IUserData;
 }> => {
   try {
-    const session = await auth();
+    const session = await getSession();
     if (!session) {
       return {
         success: false,

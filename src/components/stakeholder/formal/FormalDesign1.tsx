@@ -24,7 +24,7 @@ export const FormalDesign1 = ({ eventData }: Props) => {
       <div className="absolute inset-0 flex items-center justify-center -mt-[41.5%]">
         <Image
           src={
-            ("https://api-certify.hmtiudinus.org" +
+            ("https://certify.derisdev.cloud" +
               eventData.stakeholders![0].photoPath) as string
           }
           alt="Logo"

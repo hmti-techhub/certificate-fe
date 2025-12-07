@@ -1,9 +1,10 @@
 import { IEventData, IEventResponse } from "@/lib/types/Event";
-import { auth } from "@/auth";
+import { getSession } from "@/lib/get-session";
 
-export const getAllEvents = async () => {
+export const getEvents = async () => {
+  "use cache";
   try {
-    const session = await auth();
+    const session = await getSession();
     if (!session) {
       console.error("Session not found");
       return null;
@@ -16,10 +17,10 @@ export const getAllEvents = async () => {
 
     const res = await fetch(`${process.env.BACKEND_URL}/api/events`, {
       method: "GET",
-      next: {
-        revalidate: 60, // Revalidate every 60 seconds
-        tags: ["events"],
-      },
+      // next: {
+      //   revalidate: 60, // Revalidate every 60 seconds
+      //   tags: ["events"],
+      // },
       headers: {
         "Content-Type": "application/json",
         Authorization: `Bearer ${token}`,

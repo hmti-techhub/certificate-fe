@@ -1,8 +1,17 @@
 import EventCard from "@/components/card/EventCard";
-import { auth } from "@/auth";
+import { getSession } from "@/lib/get-session";
 import { getEventByEventId } from "@/actions/mutation/events/getEventByEventId";
 import { ParticipantsTable } from "@/components/table/ParticipantsTable";
 import { TriangleAlert } from "lucide-react";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Event | HMTI UDINUS",
+  description: "Dashboard Page",
+  icons: {
+    icon: "/favicon.ico",
+  },
+};
 
 const EventPage = async ({
   params,
@@ -10,7 +19,7 @@ const EventPage = async ({
   params: Promise<{ eventUid: string }>;
 }) => {
   const { eventUid } = await params;
-  const session = await auth();
+  const session = await getSession();
 
   const token = session?.token;
   if (!token) {

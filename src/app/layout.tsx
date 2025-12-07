@@ -1,9 +1,11 @@
-import { Toaster } from "@/components/ui/sonner";
+// @ts-ignore: allow side-effect import of global CSS without explicit type declarations
 import "./globals.css";
+import QueryProvider from "@/context/QueryProvider";
+
+import { Toaster } from "@/components/ui/sonner";
 
 import { Plus_Jakarta_Sans } from "next/font/google";
 import { SessionProvider } from "next-auth/react";
-
 const plusJakarta = Plus_Jakarta_Sans({
   subsets: ["latin"],
   weight: ["200", "300", "400", "500", "600", "700", "800"],
@@ -27,21 +29,23 @@ export default async function RootLayout({
   [&::-webkit-scrollbar-thumb]:bg-purplee"
     >
       <body className={`${plusJakarta.variable}  antialiased`}>
-        <Toaster
-          position="top-right"
-          className="toaster"
-          toastOptions={{
-            style: {
-              borderWidth: "1px",
-              borderColor: "black",
-              borderBottomWidth: "4px",
-              borderBottomStyle: "solid",
-              backgroundColor: "white",
-            },
-            duration: 3000,
-          }}
-        />
-        <SessionProvider>{children}</SessionProvider>
+        <QueryProvider>
+          <Toaster
+            position="top-right"
+            className="toaster"
+            toastOptions={{
+              style: {
+                borderWidth: "1px",
+                borderColor: "black",
+                borderBottomWidth: "4px",
+                borderBottomStyle: "solid",
+                backgroundColor: "white",
+              },
+              duration: 3000,
+            }}
+          />
+          <SessionProvider>{children}</SessionProvider>
+        </QueryProvider>
       </body>
     </html>
   );

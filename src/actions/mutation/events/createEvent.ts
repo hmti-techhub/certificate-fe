@@ -38,19 +38,33 @@ export const createEvent = async (
       eventTheme,
     } = validatedFields.data;
 
+    // const requestBody = {
+    //   eventName: eventName,
+    //   eventDescription: eventDescription,
+    //   eventDate: eventDate,
+    //   eventPrefixCode: eventCertificatePrefixCode,
+    //   eventSuffixCode: parseInt(eventCertificateSuffixCode),
+    //   eventOrganizer: eventOrganizer,
+    //   eventTheme: eventTheme,
+    //   eventTemplate: eventTemplate,
+    //   eventStakeholderName: eventStakeholderName,
+    //   eventStakeholderPosition: eventStakeholderPosition,
+    // };
     const requestBody = {
       eventName: eventName,
-      eventDescription: eventDescription,
-      eventDate: eventDate,
-      eventPrefixCode: eventCertificatePrefixCode,
-      eventSuffixCode: parseInt(eventCertificateSuffixCode),
-      eventOrganizer: eventOrganizer,
-      eventTemplate: eventTemplate,
+      description: eventDescription,
+      activityAt: eventDate,
+      prefixCode: eventCertificatePrefixCode,
+      suffixCode: parseInt(eventCertificateSuffixCode),
+      organizer: eventOrganizer,
       eventTheme: eventTheme,
-      eventStakeholderName: eventStakeholderName,
-      eventStakeholderPosition: eventStakeholderPosition,
+      eventTemplate: eventTemplate,
+      stakeholders: {
+        name: eventStakeholderName,
+        position: eventStakeholderPosition,
+      },
     };
-    const res = await fetch(`${process.env.FRONTEND_URL}/api/events/create`, {
+    const res = await fetch(`${process.env.BACKEND_URL}/api/events/create`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -78,7 +92,6 @@ export const createEvent = async (
         message: data.message,
       };
     } else {
-      revalidateTag("events");
       return {
         success: true,
         message: data.message,

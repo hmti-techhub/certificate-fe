@@ -26,10 +26,7 @@ export const TemplateStakeholderImage = ({
         ></div>
       ) : (
         <Image
-          src={
-            "https://api-certify.hmtiudinus.org" +
-            stakeholderData.photoPath
-          }
+          src={"https://certify.derisdev.cloud" + stakeholderData.photoPath}
           width={108}
           height={108}
           className={cn(

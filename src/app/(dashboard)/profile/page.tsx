@@ -1,4 +1,4 @@
-import { auth } from "@/auth";
+import { getSession } from "@/lib/get-session";
 import { getAllEvents } from "@/actions/mutation/events/getAllEvents";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
@@ -13,7 +13,7 @@ import UpcomingEvents from "@/components/card/Upcoming";
 import ResendEmailButton from "@/components/button/ResendEmailButton";
 
 export const metadata: Metadata = {
-  title: "Profile",
+  title: "Profile | CERTIFY",
   description: "User Profile Page",
   icons: {
     icon: "/favicon.ico",
@@ -21,7 +21,7 @@ export const metadata: Metadata = {
 };
 
 const ProfilePage = async () => {
-  const session = await auth();
+  const session = await getSession();
   const eventsData = await getAllEvents();
   const isEmailVerified = session?.user?.isVerifiedEmail || false;
 

@@ -3,12 +3,12 @@ import { IEventData } from "@/lib/types/Event";
 import { Frown, MailWarning, Plus } from "lucide-react";
 import Link from "next/link";
 import EventCard from "@/components/card/EventCard";
-import { auth } from "@/auth";
+import { getSession } from "@/lib/get-session";
 import { getAllEvents } from "@/actions/mutation/events/getAllEvents";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Dashboard",
+  title: "Dashboard | HMTI UDINUS",
   description: "Dashboard Page",
   icons: {
     icon: "/favicon.ico",
@@ -16,7 +16,7 @@ export const metadata: Metadata = {
 };
 
 const DashboardPage = async () => {
-  const session = await auth();
+  const session = await getSession();
   const isPremium = session?.user.isPremium;
   const isVerifiedEmail = session?.user.isVerifiedEmail;
   const eventData = await getAllEvents();

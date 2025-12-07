@@ -7,6 +7,15 @@ import { TechnologyDesign2Template } from "@/components/template/TechnologyDesig
 import { TechnologyDesign3Template } from "@/components/template/TechnologyDesign3Template";
 import { IEventParticipantCertificate } from "@/lib/types/Event";
 import { TriangleAlert } from "lucide-react";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Event Preview | HMTI UDINUS",
+  description: "Dashboard Page",
+  icons: {
+    icon: "/favicon.ico",
+  },
+};
 
 type Props = {
   params: Promise<{
