@@ -56,7 +56,7 @@ export const deleteParticipant = async (
         message: participantData.message,
       };
     } else {
-      revalidateTag("participants");
+      revalidateTag("participants", "max");
       return {
         success: true,
         message: participantData.message,

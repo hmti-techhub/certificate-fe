@@ -52,7 +52,7 @@ export const deleteAllParticipants = async (eventUid: string) => {
         message: participantData.message,
       };
     } else {
-      revalidateTag("participants");
+      revalidateTag("participants", "max");
       return {
         success: true,
         message: participantData.message,

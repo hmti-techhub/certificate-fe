@@ -56,7 +56,7 @@ export const addParticipantsByExcel = async (file: File, eventUid: string) => {
         message: responseData.message,
       };
     } else {
-      revalidateTag("participants");
+      revalidateTag("participants", "max");
       return {
         success: true,
         message: "Added Participants by excel successfully",

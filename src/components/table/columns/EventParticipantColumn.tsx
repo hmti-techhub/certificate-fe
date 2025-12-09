@@ -4,7 +4,6 @@ import { ColumnDef } from "@tanstack/react-table";
 
 //ICONS
 import { IParticipantDataTable } from "@/lib/types/Participants";
-import { QRCodeImage } from "@/components/image/QRCodeImage";
 import { ParticipantActionOption } from "@/components/options/ParticipantActionOption";
 const EventParticipantColumn: ColumnDef<IParticipantDataTable>[] = [
   {
@@ -44,9 +43,7 @@ const EventParticipantColumn: ColumnDef<IParticipantDataTable>[] = [
     },
     cell: ({ row }) => {
       const data = row.original;
-      return (
-        <QRCodeImage qrCodeSource={row.getValue("pathQr")} alt={data.name} />
-      );
+      return <h1>test</h1>;
     },
   },
   {

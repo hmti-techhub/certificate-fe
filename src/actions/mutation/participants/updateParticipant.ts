@@ -63,7 +63,7 @@ export const updateParticipant = async (
         message: data.message,
       };
     } else {
-      revalidateTag("participants");
+      revalidateTag("participants", "max");
       return {
         success: true,
         message: data.message,

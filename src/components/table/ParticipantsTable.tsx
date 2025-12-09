@@ -23,13 +23,13 @@ export const ParticipantsTable = ({ token, eventData }: Props) => {
 
   const participantData = useMemo<IParticipantDataTable[]>(
     () =>
-      participants.map((participant) => ({
+      (participants || []).map((participant) => ({
         ...participant,
         token,
         eventUid: eventData.uid,
-        pathQr: participant.qrCodes[0]?.pathQr ?? "",
+        pathQr: participant.qrCodes?.[0]?.pathQr ?? "",
         name: participant.name,
-        suffix: parseInt(participant.certificateNumber.slice(-3)),
+        suffix: parseInt(participant.certificateNumber?.slice(-3) || "0"),
         certificateNumber: participant.certificateNumber,
       })),
     [participants, token, eventData.uid],
