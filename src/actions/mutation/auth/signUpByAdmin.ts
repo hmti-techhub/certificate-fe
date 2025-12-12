@@ -53,7 +53,7 @@ export const signUpByAdmin = async (
         message: data.message,
       };
     }
-    revalidateTag("users");
+    revalidateTag("users", "max");
     return {
       success: true,
       message: data.message,

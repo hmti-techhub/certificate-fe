@@ -1,7 +1,8 @@
+import { Suspense } from "react";
 import { getSession } from "@/lib/get-session";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
-import { CheckCircle } from "lucide-react";
+import { CheckCircle, LoaderCircle } from "lucide-react";
 import { IProfileCard } from "@/lib/types/General";
 import { Metadata } from "next";
 import { avatars } from "../../../../public/avatar/avatar";
@@ -20,7 +21,7 @@ export const metadata: Metadata = {
   },
 };
 
-const ProfilePage = async () => {
+async function ProfileContent() {
   const session = await getSession();
   const eventsData = await getEvents();
   const isEmailVerified = session?.user?.isVerifiedEmail || false;
@@ -128,6 +129,22 @@ const ProfilePage = async () => {
         <UpcomingEvents events={upcomingEvents} />
       </div>
     </div>
+  );
+}
+
+function ProfileSkeleton() {
+  return (
+    <div className="container mx-auto px-2 sm:px-4 py-4 sm:py-6 flex items-center justify-center min-h-[50vh]">
+      <LoaderCircle className="animate-spin" size={48} />
+    </div>
+  );
+}
+
+const ProfilePage = () => {
+  return (
+    <Suspense fallback={<ProfileSkeleton />}>
+      <ProfileContent />
+    </Suspense>
   );
 };
 

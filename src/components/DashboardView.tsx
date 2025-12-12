@@ -3,7 +3,6 @@ import { Card, CardContent } from "./ui/card";
 import Image from "next/image";
 import { FormatDate } from "@/lib/functions";
 import { Plus } from "lucide-react";
-import { IAuthSession } from "@/lib/types/Auth";
 
 interface IDummyEvent {
   owner: string;

@@ -56,7 +56,7 @@ export const uploadStakeholderImage = async (file: File, eventUid: string) => {
         message: responseData.message || "Failed to upload file image",
       };
     } else {
-      revalidateTag("events/" + eventUid);
+      revalidateTag("events/" + eventUid, "max");
       return {
         success: true,
         message: "Stakeholder image uploaded successfully",

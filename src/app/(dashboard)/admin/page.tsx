@@ -47,7 +47,7 @@ const getUsersData = async (): Promise<{
 
     return {
       success: true,
-      data: usersData.data,
+      data: usersData.data ?? undefined,
     };
   } catch (error) {
     console.error("Error fetching users data:", error);

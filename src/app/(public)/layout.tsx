@@ -1,4 +1,3 @@
-// @ts-ignore: allow side-effect import of global CSS without explicit type declarations
 import "../globals.css";
 import { Suspense } from "react";
 import { getSession } from "@/lib/get-session";

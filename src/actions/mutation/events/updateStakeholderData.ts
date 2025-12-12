@@ -63,7 +63,7 @@ export const updateStakeholderData = async (
         message: data.message,
       };
     } else {
-      revalidateTag("events/" + eventUid);
+      revalidateTag("events/" + eventUid, "max");
       return {
         success: true,
         message: data.message,

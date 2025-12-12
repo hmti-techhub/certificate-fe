@@ -53,7 +53,7 @@ export const deleteUser = async (userUid: string) => {
         message: userData.message,
       };
     } else {
-      revalidateTag("users");
+      revalidateTag("users", "max");
       return {
         success: true,
         message: userData.message,

@@ -61,7 +61,7 @@ export const uploadEventLogo = async (
         message: responseData.message || "Failed to upload file logo",
       };
     } else {
-      revalidateTag("events/" + eventUid);
+      revalidateTag("events/" + eventUid, "max");
       return {
         success: true,
         message: "Event logo uploaded successfully",

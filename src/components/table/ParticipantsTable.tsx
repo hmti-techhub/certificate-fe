@@ -16,10 +16,7 @@ type Props = {
 };
 
 export const ParticipantsTable = ({ token, eventData }: Props) => {
-  const { participants, isLoading, isError, errorMessage } = useParticipants(
-    token,
-    eventData.uid,
-  );
+  const { participants, isLoading } = useParticipants(token, eventData.uid);
 
   const participantData = useMemo<IParticipantDataTable[]>(
     () =>
