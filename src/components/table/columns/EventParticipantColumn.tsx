@@ -2,9 +2,11 @@
 
 import { ColumnDef } from "@tanstack/react-table";
 
-//ICONS
+//COMPONENTS
 import { IParticipantDataTable } from "@/lib/types/Participants";
 import { ParticipantActionOption } from "@/components/options/ParticipantActionOption";
+import { QRCodeDisplay } from "@/components/ui/QRCodeDisplay";
+
 const EventParticipantColumn: ColumnDef<IParticipantDataTable>[] = [
   {
     id: "id",
@@ -37,13 +39,33 @@ const EventParticipantColumn: ColumnDef<IParticipantDataTable>[] = [
     enableHiding: true,
   },
   {
-    accessorKey: "pathQr",
+    accessorKey: "qrCodeLink",
     header: () => {
       return <div className="text-center text-xs md:text-sm">QR Code</div>;
     },
     cell: ({ row }) => {
       const data = row.original;
-      return <h1>test</h1>;
+      const qrCodeLink = data.qrCodeLink;
+
+      return (
+        <div className="flex justify-center">
+          {qrCodeLink ? (
+            <a
+              href={qrCodeLink}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="hover:opacity-80 transition-opacity"
+              title="Click to view certificate"
+            >
+              <QRCodeDisplay value={qrCodeLink} size={64} />
+            </a>
+          ) : (
+            <div className="w-16 h-16 flex items-center justify-center bg-gray-100 rounded text-xs text-gray-400">
+              No QR
+            </div>
+          )}
+        </div>
+      );
     },
   },
   {

@@ -26,7 +26,7 @@ export const deleteAllParticipants = async (eventUid: string) => {
       };
     }
     const res = await fetch(
-      `${process.env.BACKEND_URL}/api/events/${eventUid}/participants/delete`,
+      `${process.env.FRONTEND_URL}/api/events/${eventUid}/participants/delete`,
       {
         method: "DELETE",
         headers: {

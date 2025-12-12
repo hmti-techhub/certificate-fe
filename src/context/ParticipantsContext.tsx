@@ -23,10 +23,13 @@ export function ParticipantsProvider({
   const refreshParticipants = useCallback(async () => {
     setIsRefreshing(true);
     try {
-      // Force refetch all participants queries - more aggressive than invalidateQueries
+      // Step 1: Invalidate all participants queries - marks them as stale
+      await queryClient.invalidateQueries({
+        queryKey: ["participants"],
+      });
+      // Step 2: Force refetch all participants queries - ensures immediate update
       await queryClient.refetchQueries({
         queryKey: ["participants"],
-        type: "active",
       });
     } finally {
       setIsRefreshing(false);

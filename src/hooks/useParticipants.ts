@@ -1,7 +1,6 @@
 // hooks/useParticipants.ts
 "use client";
 
-import { useEffect } from "react";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import {
   IParticipantData,
@@ -56,13 +55,18 @@ export const useParticipants = (
           "Content-Type": "application/json",
           Authorization: `Bearer ${token}`,
         },
-        cache: "no-store", // Disable browser cache
+        // No cache: "no-store" - allow route handler's next.revalidate to work
       });
 
       const participantsData: IParticipantResponse<IParticipantData[]> =
         await res.json();
 
-      // Error handling yang sama seperti sebelumnya
+      // Handle 404 or empty data as empty array - not an error
+      if (res.status === 404 || participantsData.data === null) {
+        return [];
+      }
+
+      // Other errors (401, 500, etc.) still throw
       if (!res.ok || !participantsData.success) {
         throw new Error(
           (participantsData.message as string) ||
@@ -72,38 +76,29 @@ export const useParticipants = (
 
       return participantsData.data || [];
     },
-    staleTime: 3 * 60 * 1000, // Data fresh selama 3 menit (lebih pendek karena data participants sering berubah)
-    gcTime: 10 * 60 * 1000, // Cache disimpan 10 menit
-    refetchOnWindowFocus: true,
-    refetchOnMount: true,
-    retry: 3,
+    staleTime: 30 * 1000, // Data considered fresh for 30 seconds only
+    gcTime: 10 * 60 * 1000, // Cache kept for 10 minutes
+    refetchOnWindowFocus: false, // Don't refetch when user focuses window
+    refetchOnMount: "always", // Always refetch on browser refresh/mount
+    refetchOnReconnect: false, // Don't refetch when reconnecting
+    retry: 2,
     retryDelay: (attemptIndex) => Math.min(1000 * 2 ** attemptIndex, 30000),
     enabled: autoFetch && !!token && !!eventUid, // Respect autoFetch option & validate token/eventUid
   });
 
-  // Auto refetch when context triggers refresh (integration dengan ParticipantsContext)
-  // Note: useEffect tidak perlu karena TanStack Query sudah handle refetch
-  // Tapi kita perlu trigger refetch saat isRefreshing berubah
-  useEffect(() => {
-    if (isRefreshing) {
-      refetch();
-    }
-  }, [isRefreshing, refetch]);
-
-  // Manual refresh function - invalidate cache
+  // Manual refresh function - delegates to context's refetchQueries
   const refresh = () => {
-    queryClient.invalidateQueries({
-      queryKey: ["participants", eventUid, token],
-    });
+    queryClient.invalidateQueries({ queryKey: ["participants", eventUid] });
+    refetch();
   };
 
   return {
     participants: data || [],
-    isLoading: isLoading || isRefreshing, // Combine loading states seperti sebelumnya
+    isLoading: isLoading || isRefreshing, // Combine loading states
     isError,
     errorMessage: error?.message || null,
     refetch, // TanStack Query native refetch
-    refresh, // Manual refresh untuk compatibility
+    refresh, // Manual refresh for compatibility
   };
 };
 

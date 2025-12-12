@@ -28,6 +28,7 @@ export const ParticipantsTable = ({ token, eventData }: Props) => {
         token,
         eventUid: eventData.uid,
         pathQr: participant.qrCodes?.[0]?.pathQr ?? "",
+        qrCodeLink: participant.qrCodeLink || "",
         name: participant.name,
         suffix: parseInt(participant.certificateNumber?.slice(-3) || "0"),
         certificateNumber: participant.certificateNumber,
@@ -36,13 +37,8 @@ export const ParticipantsTable = ({ token, eventData }: Props) => {
   );
 
   if (isLoading) return <ParticipantsTableSkeleton />;
-  if (isError)
-    return (
-      <div className="w-full flex items-center justify-center">
-        {errorMessage}
-      </div>
-    );
-
+  // Note: Don't block on isError - show empty table with accessible buttons
+  // Error is logged but table remains functional
   return (
     <div>
       <GeneralTable

@@ -14,6 +14,7 @@ export interface IParticipantData {
   position: string;
   addedAt: string;
   certificateNumber: string;
+  qrCodeLink?: string;
   qrCodes?: {
     pathQr: string;
     generatedAt: string;
@@ -41,6 +42,7 @@ export interface IParticipantDataTable {
   certificateNumber: string;
   suffix: number;
   pathQr: string;
+  qrCodeLink?: string;
   email?: string;
   position?: string;
 }

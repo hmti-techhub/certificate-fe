@@ -91,48 +91,41 @@ export function GeneralTable<TData, TValue>({
 
   const handleDownload = () => {
     if (extensionSelected === "") {
-      toast.error("Please select a format to download the QR code");
+      toast.error("Please select a format to download the QR codes");
       return;
     }
-    const downloadFile = async () => {
-      try {
-        const url = new URL(
-          `/qrcode/${eventUid}/all`,
-          "https://certify.derisdev.cloud",
-        );
-        url.searchParams.set("ext", extensionSelected);
-        const updatedUrl = url.toString();
-        const link = document.createElement("a");
-        link.href = updatedUrl;
-        link.download = updatedUrl;
-        return new Promise<void>((resolve) => {
-          link.addEventListener("click", () => {
-            setTimeout(() => {
-              resolve();
-            }, 7000);
-          });
-          document.body.appendChild(link);
-          link.click();
-          document.body.removeChild(link);
-        });
-      } catch (error) {
-        throw new Error("Error downloading QR code: " + error);
-      }
-    };
-    try {
-      toast.promise(downloadFile(), {
-        loading: "Downloading QR code...",
-        success: () => {
-          return "QR code downloaded successfully";
-        },
-        error: (error) => {
-          return error.message as string;
-        },
-      });
-    } catch (error) {
-      console.error("Error downloading QR code:", error);
-      toast.error("Error downloading QR code");
+
+    // Get participants with qrCodeLink from table data
+    const participantsWithQR = (
+      data as Array<{ name: string; qrCodeLink?: string }>
+    )
+      .filter((p) => p.qrCodeLink)
+      .map((p) => ({ name: p.name, qrCodeLink: p.qrCodeLink! }));
+
+    if (participantsWithQR.length === 0) {
+      toast.error("No participants with QR codes available");
+      return;
     }
+
+    const downloadFile = async () => {
+      const { downloadAllQRCodes } = await import("@/lib/qrcode-utils");
+      await downloadAllQRCodes(participantsWithQR, eventName || "Event", {
+        format: extensionSelected as "png" | "jpeg" | "jpg" | "webp",
+        size: 300,
+      });
+    };
+
+    toast.promise(downloadFile(), {
+      loading: `Generating ${participantsWithQR.length} QR codes and creating ZIP...`,
+      success: () => {
+        setOpenDownloadDialog(false);
+        return "All QR codes downloaded successfully";
+      },
+      error: (error) => {
+        console.error("Error downloading QR codes:", error);
+        return "Error downloading QR codes";
+      },
+    });
   };
 
   const deleteEventHandler = () => {

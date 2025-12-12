@@ -19,7 +19,7 @@ async function fetchParticipantsCached(
 
   try {
     const res = await fetch(
-      `${process.env.BACKEND_URL}/api/events/participants/${eventUid}`,
+      `${process.env.FRONTEND_URL}/api/events/participants/${eventUid}`,
       {
         method: "GET",
         headers: {
