@@ -3,9 +3,7 @@ import { NextRequest, NextResponse } from "next/server";
 
 export async function POST(
   req: NextRequest,
-  {
-    params,
-  }: { params: Promise<{ eventUid: string; option: "first" | "second" }> },
+  { params }: { params: Promise<{ eventUid: string; option: string }> },
 ) {
   try {
     const { eventUid, option } = await params;
