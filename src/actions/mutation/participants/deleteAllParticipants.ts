@@ -1,11 +1,11 @@
 "use server";
-import { auth } from "@/auth";
+import { getSession } from "@/lib/get-session";
 import { IParticipantResponse } from "@/lib/types/Participants";
 import { revalidateTag } from "next/cache";
 
 export const deleteAllParticipants = async (eventUid: string) => {
   try {
-    const session = await auth();
+    const session = await getSession();
     if (!session) {
       return {
         success: false,
@@ -26,7 +26,7 @@ export const deleteAllParticipants = async (eventUid: string) => {
       };
     }
     const res = await fetch(
-      `${process.env.BACKEND_URL}/api/events/${eventUid}/participants/delete`,
+      `${process.env.FRONTEND_URL}/api/events/${eventUid}/participants/delete`,
       {
         method: "DELETE",
         headers: {
@@ -52,7 +52,7 @@ export const deleteAllParticipants = async (eventUid: string) => {
         message: participantData.message,
       };
     } else {
-      revalidateTag("participants");
+      revalidateTag("participants", "max");
       return {
         success: true,
         message: participantData.message,

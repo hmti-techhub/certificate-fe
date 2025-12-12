@@ -4,13 +4,13 @@ import { addAccountFormSchema } from "@/lib/types/General";
 import { IAuthResponse } from "@/lib/types/Auth";
 import { z } from "zod";
 import { revalidateTag } from "next/cache";
-import { auth } from "@/auth";
+import { getSession } from "@/lib/get-session";
 
 export const signUpByAdmin = async (
   values: z.infer<typeof addAccountFormSchema>,
 ) => {
   try {
-    const session = await auth();
+    const session = await getSession();
     if (!session) {
       return {
         success: false,

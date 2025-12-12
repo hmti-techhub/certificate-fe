@@ -3,22 +3,21 @@ import { getSession } from "@/lib/get-session";
 import { UsersTable } from "@/components/table/UsersTable";
 import { IUserResponse, IUsersData } from "@/lib/types/User";
 
-const getUsersData = async () => {
+/**
+ * Fetches users data from the API
+ * Note: Session is already validated by middleware (proxy.ts) for /admin routes
+ * Using getSession() here benefits from React cache() deduplication
+ */
+const getUsersData = async (): Promise<{
+  success: boolean;
+  data?: IUsersData[];
+  message?: string;
+}> => {
+  // Session guaranteed by middleware - using cached getSession()
+  const session = (await getSession())!;
+  const token = session.token;
+
   try {
-    const session = await getSession();
-    if (!session) {
-      return {
-        success: false,
-        message: "Session not found",
-      };
-    }
-    const token = session?.token;
-    if (!token) {
-      return {
-        success: false,
-        message: "Token not found",
-      };
-    }
     const res = await fetch(`${process.env.FRONTEND_URL}/api/users`, {
       method: "GET",
       headers: {
@@ -30,12 +29,14 @@ const getUsersData = async () => {
         tags: ["users"],
       },
     });
+
     if (!res.ok) {
       return {
         success: false,
         message: "Failed to fetch users data",
       };
     }
+
     const usersData: IUserResponse<IUsersData[]> = await res.json();
     if (!usersData.success) {
       return {
@@ -43,6 +44,7 @@ const getUsersData = async () => {
         message: usersData.message || "Failed to fetch users data",
       };
     }
+
     return {
       success: true,
       data: usersData.data,
@@ -57,11 +59,10 @@ const getUsersData = async () => {
 };
 
 const AdminPage = async () => {
-  const session = await getSession();
-  if (!session) {
-    return <div>Unauthorized</div>;
-  }
-  const token = session?.token;
+  // Session guaranteed by middleware - cache() ensures single call even with getUsersData
+  const session = (await getSession())!;
+  const token = session.token;
+
   const usersData = await getUsersData();
   if (!usersData.success) {
     return <div>No users data available</div>;

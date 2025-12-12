@@ -1,11 +1,11 @@
 "use server";
 
-import { auth } from "@/auth";
+import { getSession } from "@/lib/get-session";
 import { revalidateTag } from "next/cache";
 
 export const uploadStakeholderImage = async (file: File, eventUid: string) => {
   try {
-    const session = await auth();
+    const session = await getSession();
     if (!session) {
       return {
         success: false,

@@ -1,7 +1,5 @@
 import { auth } from "@/auth";
 import { NextResponse } from "next/server";
-import type { NextRequest } from "next/server";
-
 /**
  * Proxy untuk auth check di edge
  * Menggantikan middleware.ts di Next.js 16+

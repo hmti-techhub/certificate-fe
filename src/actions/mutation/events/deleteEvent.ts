@@ -1,11 +1,11 @@
 "use server";
-import { auth } from "@/auth";
+import { getSession } from "@/lib/get-session";
 import { IEventResponse } from "@/lib/types/Event";
 import { revalidateTag } from "next/cache";
 
 export const deleteEvent = async (eventUid: string) => {
   try {
-    const session = await auth();
+    const session = await getSession();
     if (!session) {
       return {
         success: false,
@@ -44,7 +44,7 @@ export const deleteEvent = async (eventUid: string) => {
         message: data.message,
       };
     } else {
-      revalidateTag("events");
+      revalidateTag("events", "max");
       return {
         success: true,
         message: "Event deleted successfully",

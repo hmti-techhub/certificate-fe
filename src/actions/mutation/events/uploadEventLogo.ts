@@ -1,6 +1,6 @@
 "use server";
 
-import { auth } from "@/auth";
+import { getSession } from "@/lib/get-session";
 import { IEventResponse, IEventUploadLogo } from "@/lib/types/Event";
 import { revalidateTag } from "next/cache";
 
@@ -10,7 +10,7 @@ export const uploadEventLogo = async (
   option: "first" | "second",
 ) => {
   try {
-    const session = await auth();
+    const session = await getSession();
     if (!session) {
       return {
         success: false,

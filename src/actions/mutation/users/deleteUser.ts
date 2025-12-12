@@ -1,12 +1,12 @@
 "use server";
 
-import { auth } from "@/auth";
+import { getSession } from "@/lib/get-session";
 import { IUserResponse } from "@/lib/types/User";
 import { revalidateTag } from "next/cache";
 
 export const deleteUser = async (userUid: string) => {
   try {
-    const session = await auth();
+    const session = await getSession();
     if (!session) {
       return {
         success: false,

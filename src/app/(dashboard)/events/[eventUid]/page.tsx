@@ -4,6 +4,9 @@ import { getEventByEventId } from "@/actions/mutation/events/getEventByEventId";
 import { ParticipantsTable } from "@/components/table/ParticipantsTable";
 import { TriangleAlert } from "lucide-react";
 import { Metadata } from "next";
+import { Suspense } from "react";
+import ParticipantsTableSkeleton from "@/components/skeleton/ParticipantsTableSkeleton";
+import { Skeleton } from "@/components/ui/skeleton";
 
 export const metadata: Metadata = {
   title: "Event | HMTI UDINUS",
@@ -13,22 +16,26 @@ export const metadata: Metadata = {
   },
 };
 
-const EventPage = async ({
-  params,
-}: {
-  params: Promise<{ eventUid: string }>;
-}) => {
-  const { eventUid } = await params;
-  const session = await getSession();
+/**
+ * Skeleton for event page loading state
+ */
+const EventPageSkeleton = () => (
+  <div className="w-full px-0 md:px-0 lg:px-0 2xl:px-60 pb-40">
+    <Skeleton className="w-full h-48 rounded-xl" />
+    <div className="flex w-full justify-between mt-10 items-center">
+      <Skeleton className="h-7 w-48" />
+    </div>
+    <ParticipantsTableSkeleton />
+  </div>
+);
 
-  const token = session?.token;
-  if (!token) {
-    return (
-      <div className="w-full min-h-screen flex items-center justify-center">
-        Unauthorized access
-      </div>
-    );
-  }
+/**
+ * Event page content - accesses runtime data (session)
+ * Must be wrapped in Suspense boundary per Cache Components requirements
+ */
+const EventPageContent = async ({ eventUid }: { eventUid: string }) => {
+  const session = (await getSession())!;
+  const token = session.token;
   const eventData = await getEventByEventId(eventUid);
 
   if (!eventData) {
@@ -43,6 +50,7 @@ const EventPage = async ({
       </div>
     );
   }
+
   return (
     <div className="w-full px-0 md:px-0 lg:px-0 2xl:px-60 pb-40">
       <div className="w-full">
@@ -56,6 +64,24 @@ const EventPage = async ({
         />
       </div>
     </div>
+  );
+};
+
+/**
+ * Event page - wraps runtime data access in Suspense boundary
+ * Following Next.js 16 Cache Components best practice
+ */
+const EventPage = async ({
+  params,
+}: {
+  params: Promise<{ eventUid: string }>;
+}) => {
+  const { eventUid } = await params;
+
+  return (
+    <Suspense fallback={<EventPageSkeleton />}>
+      <EventPageContent eventUid={eventUid} />
+    </Suspense>
   );
 };
 

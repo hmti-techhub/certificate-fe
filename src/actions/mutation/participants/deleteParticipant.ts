@@ -1,6 +1,6 @@
 "use server";
 
-import { auth } from "@/auth";
+import { getSession } from "@/lib/get-session";
 import { IParticipantResponse } from "@/lib/types/Participants";
 import { revalidateTag } from "next/cache";
 
@@ -9,7 +9,7 @@ export const deleteParticipant = async (
   participantUid: string,
 ) => {
   try {
-    const session = await auth();
+    const session = await getSession();
     if (!session) {
       return {
         success: false,
@@ -56,7 +56,7 @@ export const deleteParticipant = async (
         message: participantData.message,
       };
     } else {
-      revalidateTag("participants");
+      revalidateTag("participants", "max");
       return {
         success: true,
         message: participantData.message,

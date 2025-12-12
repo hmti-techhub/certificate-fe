@@ -1,38 +1,38 @@
 import { IEventData, IEventResponse } from "@/lib/types/Event";
 import { getSession } from "@/lib/get-session";
+import { cacheTag, cacheLife } from "next/cache";
 
-export const getEvents = async () => {
+async function fetchEventsCached(token: string) {
   "use cache";
-  try {
-    const session = await getSession();
-    if (!session) {
-      console.error("Session not found");
-      return null;
-    }
-    const token = session.token;
-    if (!token) {
-      console.error("Token not found");
-      return null;
-    }
+  cacheTag("events");
+  cacheLife("minutes");
 
+  try {
     const res = await fetch(`${process.env.BACKEND_URL}/api/events`, {
       method: "GET",
-      // next: {
-      //   revalidate: 60, // Revalidate every 60 seconds
-      //   tags: ["events"],
-      // },
       headers: {
         "Content-Type": "application/json",
         Authorization: `Bearer ${token}`,
       },
     });
+
     const eventData: IEventResponse<IEventData[]> = await res.json();
-    if (!eventData.success && eventData.status !== 200) {
-      return null;
-    }
+
+    if (!eventData.success || eventData.status !== 200) return null;
 
     return eventData.data;
   } catch (error) {
-    console.error(`Error fetching event data (SERVER ACTIONS) : `, error);
+    console.error("Error fetching event data:", error);
+    return null;
   }
+}
+
+export const getEvents = async () => {
+  const session = await getSession();
+  if (!session?.token) {
+    console.error("Session or token not found");
+    return null;
+  }
+
+  return fetchEventsCached(session.token);
 };

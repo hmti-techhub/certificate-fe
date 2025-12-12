@@ -4,7 +4,7 @@ import { updateParticipantSchema } from "@/lib/types/General";
 import { z } from "zod";
 import { IParticipantResponse } from "@/lib/types/Participants";
 import { revalidateTag } from "next/cache";
-import { auth } from "@/auth";
+import { getSession } from "@/lib/get-session";
 
 export const updateParticipant = async (
   values: z.infer<typeof updateParticipantSchema>,
@@ -12,7 +12,7 @@ export const updateParticipant = async (
   participantUid: string,
 ) => {
   try {
-    const session = await auth();
+    const session = await getSession();
     if (!session) {
       return {
         success: false,
@@ -63,7 +63,7 @@ export const updateParticipant = async (
         message: data.message,
       };
     } else {
-      revalidateTag("participants");
+      revalidateTag("participants", "max");
       return {
         success: true,
         message: data.message,

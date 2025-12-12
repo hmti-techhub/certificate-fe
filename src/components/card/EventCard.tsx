@@ -197,8 +197,8 @@ const EventCard = ({
   }
   return (
     <Link href={"/events/" + event.uid} key={event.uid}>
-      <Card className="bordered py-4 border-b-4 hover:border-b cursor-pointer flex flex-col gap-4">
-        <CardHeader className="aspect-[7/2] p-0 w-full rounded-md border-black overflow-hidden border">
+      <Card className="h-full flex flex-col bordered py-4 border-b-4 hover:border-b cursor-pointer">
+        <CardHeader className="aspect-[7/2] p-0 w-full  rounded-md border-black overflow-hidden border">
           <Image
             src="/eventbg-1.jpg"
             alt="Event Background"
@@ -208,15 +208,17 @@ const EventCard = ({
             priority
           />
         </CardHeader>
-        <CardContent className="flex flex-col items-start p-0 m-0">
-          <div className="badge mb-2 flex text-[10.5px] md:text-xs">
-            {event.organizer}
-          </div>
-          <h1 className="font-bold text-xl mb-4">{event.eventName}</h1>
-        </CardContent>
-        <CardFooter className="flex flex-row justify-between p-0 m-0 text-gray-700 text-sm">
-          <FormatDate>{event.activityAt}</FormatDate>
-        </CardFooter>
+        <div className="h-full flex flex-col justify-between">
+          <CardContent className="flex flex-col items-start p-0 m-0">
+            <div className="badge mb-2 flex text-[10.5px] md:text-xs">
+              {event.organizer}
+            </div>
+            <h1 className="font-bold text-xl">{event.eventName}</h1>
+          </CardContent>
+          <CardFooter className="flex flex-row justify-between p-0 m-0 text-gray-700 text-sm">
+            <FormatDate>{event.activityAt}</FormatDate>
+          </CardFooter>
+        </div>
       </Card>
     </Link>
   );

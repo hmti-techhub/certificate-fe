@@ -1,5 +1,4 @@
 import { getSession } from "@/lib/get-session";
-import { getAllEvents } from "@/actions/mutation/events/getAllEvents";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import { CheckCircle } from "lucide-react";
@@ -11,6 +10,7 @@ import ProfileCard from "@/components/card/ProfileCard";
 import RecentActivity from "@/components/card/Recent";
 import UpcomingEvents from "@/components/card/Upcoming";
 import ResendEmailButton from "@/components/button/ResendEmailButton";
+import { getEvents } from "@/actions/getEvents";
 
 export const metadata: Metadata = {
   title: "Profile | CERTIFY",
@@ -22,7 +22,7 @@ export const metadata: Metadata = {
 
 const ProfilePage = async () => {
   const session = await getSession();
-  const eventsData = await getAllEvents();
+  const eventsData = await getEvents();
   const isEmailVerified = session?.user?.isVerifiedEmail || false;
 
   const profileCard: IProfileCard[] = [

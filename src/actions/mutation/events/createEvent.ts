@@ -4,14 +4,14 @@ import { createEventSchema } from "@/lib/types/General";
 import { z } from "zod";
 import { IEventCreate, IEventResponse } from "@/lib/types/Event";
 import { revalidateTag } from "next/cache";
-import { auth } from "@/auth";
+import { getSession } from "@/lib/get-session";
 
 export const createEvent = async (
   values: z.infer<typeof createEventSchema>,
 ) => {
   try {
     const validatedFields = createEventSchema.safeParse(values);
-    const session = await auth();
+    const session = await getSession();
     if (!session) {
       return {
         success: false,
@@ -92,6 +92,7 @@ export const createEvent = async (
         message: data.message,
       };
     } else {
+      revalidateTag("events", "max");
       return {
         success: true,
         message: data.message,

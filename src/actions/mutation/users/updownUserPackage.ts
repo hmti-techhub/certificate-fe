@@ -1,15 +1,16 @@
 "use server";
 
-import { auth } from "@/auth";
+import { getSession } from "@/lib/get-session";
 import { updownPackageFormSchema } from "@/lib/types/General";
 import { revalidateTag } from "next/cache";
 import { z } from "zod";
+
 export const updownUserPackage = async (
   values: z.infer<typeof updownPackageFormSchema>,
   userUid: string,
 ) => {
   try {
-    const session = await auth();
+    const session = await getSession();
     if (!session) {
       return {
         success: false,

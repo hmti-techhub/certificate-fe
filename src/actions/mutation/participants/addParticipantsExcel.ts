@@ -1,11 +1,11 @@
 "use server";
 
-import { auth } from "@/auth";
+import { getSession } from "@/lib/get-session";
 import { revalidateTag } from "next/cache";
 
 export const addParticipantsByExcel = async (file: File, eventUid: string) => {
   try {
-    const session = await auth();
+    const session = await getSession();
     if (!session) {
       return {
         success: false,
@@ -56,7 +56,7 @@ export const addParticipantsByExcel = async (file: File, eventUid: string) => {
         message: responseData.message,
       };
     } else {
-      revalidateTag("participants");
+      revalidateTag("participants", "max");
       return {
         success: true,
         message: "Added Participants by excel successfully",

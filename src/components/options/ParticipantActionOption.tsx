@@ -55,45 +55,32 @@ export const ParticipantActionOption = ({
       toast.error("Please select a format to download the QR code");
       return;
     }
-    const downloadFile = async () => {
-      try {
-        const url = new URL(
-          participantData.pathQr,
-          "https://certify.derisdev.cloud",
-        );
-        url.searchParams.set("download", "1");
-        const updatedUrl = url.toString() + `&ext=${extensionSelected}`;
-        const link = document.createElement("a");
-        link.href = updatedUrl;
-        link.download = updatedUrl;
-        return new Promise<void>((resolve) => {
-          link.addEventListener("click", () => {
-            setTimeout(() => {
-              resolve();
-            }, 4000);
-          });
-          document.body.appendChild(link);
-          link.click();
-          document.body.removeChild(link);
-        });
-      } catch (error) {
-        throw new Error("Error downloading QR code: " + error);
-      }
-    };
-    try {
-      toast.promise(downloadFile(), {
-        loading: "Downloading QR code...",
-        success: () => {
-          return "QR code downloaded successfully";
-        },
-        error: (error) => {
-          return error.message as string;
-        },
-      });
-    } catch (error) {
-      console.error("Error downloading QR code:", error);
-      toast.error("Error downloading QR code");
+
+    // Check if qrCodeLink is available
+    if (!participantData.qrCodeLink) {
+      toast.error("QR code link not available for this participant");
+      return;
     }
+
+    const downloadFile = async () => {
+      const { downloadQRCode } = await import("@/lib/qrcode-utils");
+      await downloadQRCode(participantData.qrCodeLink!, participantData.name, {
+        format: extensionSelected as "png" | "jpeg" | "jpg" | "webp",
+        size: 300,
+      });
+    };
+
+    toast.promise(downloadFile(), {
+      loading: "Generating and downloading QR code...",
+      success: () => {
+        setOpenDownloadDialog(false);
+        return "QR code downloaded successfully";
+      },
+      error: (error) => {
+        console.error("Error downloading QR code:", error);
+        return "Error downloading QR code";
+      },
+    });
   };
   const handleDelete = () => {
     setIsLoading(true);
